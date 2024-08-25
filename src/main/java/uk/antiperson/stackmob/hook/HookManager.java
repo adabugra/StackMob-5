@@ -16,7 +16,7 @@ public class HookManager {
 
     private final HashSet<Hook> hooks;
     private final StackMob sm;
-    private ProtocolLibHook protocolLibHook;
+    private PacketEventsHook packetEventsHook;
     public HookManager(StackMob sm) {
         this.sm = sm;
         hooks = new HashSet<>();
@@ -49,7 +49,7 @@ public class HookManager {
         registerHook(McmmoHook.class);
         registerHook(CitizensHook.class);
         registerHook(JobsHook.class);
-        registerHook(ProtocolLibHook.class);
+        registerHook(PacketEventsHook.class);
         registerHook(ClearlaggHook.class);
         registerHook(MyPetHook.class);
     }
@@ -174,16 +174,16 @@ public class HookManager {
         return null;
     }
 
-    public ProtocolLibHook getProtocolLibHook() {
-        if (protocolLibHook != null) {
-            return protocolLibHook;
+    public PacketEventsHook getPacketEventsHook() {
+        if (packetEventsHook != null) {
+            return packetEventsHook;
         }
         for (Hook hook : hooks) {
-            if (hook instanceof ProtocolLibHook) {
-                protocolLibHook = (ProtocolLibHook) hook;
+            if (hook instanceof PacketEventsHook) {
+                packetEventsHook = (PacketEventsHook) hook;
             }
         }
-        return protocolLibHook;
+        return packetEventsHook;
     }
 
 }

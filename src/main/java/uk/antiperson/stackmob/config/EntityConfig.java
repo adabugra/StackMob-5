@@ -14,7 +14,6 @@ import org.bukkit.entity.WaterMob;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityKnockbackEvent;
-import org.stringtemplate.v4.ST;
 import uk.antiperson.stackmob.StackMob;
 import uk.antiperson.stackmob.entity.StackEntity;
 import uk.antiperson.stackmob.entity.death.DeathType;
@@ -124,7 +123,7 @@ public class EntityConfig {
 
     public StackEntity.TagMode getTagMode() {
         StackEntity.TagMode tagMode = StackEntity.TagMode.valueOf(getString("display-name.visibility"));
-        if (sm.getHookManager().getProtocolLibHook() == null && tagMode == StackEntity.TagMode.NEARBY) {
+        if (sm.getHookManager().getPacketEventsHook() == null && tagMode == StackEntity.TagMode.NEARBY) {
             tagMode = StackEntity.TagMode.HOVER;
         }
         return tagMode;

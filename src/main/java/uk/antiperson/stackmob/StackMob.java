@@ -1,13 +1,13 @@
 package uk.antiperson.stackmob;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.InvalidPluginException;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.antiperson.stackmob.commands.Commands;
 import uk.antiperson.stackmob.config.EntityTranslation;
@@ -27,7 +27,6 @@ import uk.antiperson.stackmob.utils.ItemTools;
 import uk.antiperson.stackmob.utils.Updater;
 import uk.antiperson.stackmob.utils.Utilities;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
@@ -105,11 +104,11 @@ public class StackMob extends JavaPlugin {
         int tagInterval = getMainConfig().getConfig().getTagNearbyInterval();
         getScheduler().runGlobalTaskTimer(this, new TagCheckTask(this), 30, tagInterval);
         if (getMainConfig().getConfig().isUseArmorStand()) {
-            getScheduler().runGlobalTaskTimer(this, new TagMoveTask(this), 10, 1);
+            getScheduler().runGlobalTaskTimer(this, new TagMoveTask(this), 10,  1);
         }
         getLogger().info("Detected server version " + Utilities.getMinecraftVersion());
-        if (getHookManager().getProtocolLibHook() == null) {
-            getLogger().warning("ProtocolLib could not be found (or has been disabled). The display name visibility setting 'NEARBY' will not work unless this is fixed.");
+        if (getHookManager().getPacketEventsHook() == null) {
+            getLogger().warning("PacketEvents could not be found (or has been disabled). The display name visibility setting 'NEARBY' will not work unless this is fixed.");
         }
         getEntityManager().registerAllEntities();
         getUpdater().checkUpdate().whenComplete(((updateResult, throwable) -> {

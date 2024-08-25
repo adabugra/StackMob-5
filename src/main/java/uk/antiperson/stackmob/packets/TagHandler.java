@@ -1,16 +1,11 @@
 package uk.antiperson.stackmob.packets;
 
 import net.kyori.adventure.text.Component;
-import org.bukkit.FluidCollisionMode;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.util.RayTraceResult;
-import org.bukkit.util.Vector;
 import uk.antiperson.stackmob.StackMob;
 import uk.antiperson.stackmob.entity.StackEntity;
-import uk.antiperson.stackmob.hook.hooks.ProtocolLibHook;
-import uk.antiperson.stackmob.utils.Utilities;
+import uk.antiperson.stackmob.hook.hooks.PacketEventsHook;
 
 public class TagHandler {
 
@@ -28,8 +23,8 @@ public class TagHandler {
     }
 
     public void init() {
-        // force protocollib for 1.20.2
-        this.fakeArmorStand = new ProtocolLibFakeArmorStand(sm, player);
+        // force packetevents for 1.20.2
+        this.fakeArmorStand = new PacketEventsFakeArmorStand(sm, player);
     }
 
     public void newlyInRange() {
@@ -57,7 +52,6 @@ public class TagHandler {
         if (!stackEntity.getEntityConfig().isUseArmorStand()) {
             return;
         }
-        fakeArmorStand.teleport(stackEntity.getEntity(), stackEntity.getEntityConfig().getArmorstandOffset());
         if (stackEntity.getTag().getDisplayName().equals(lastTag)) {
             return;
         }
@@ -74,11 +68,11 @@ public class TagHandler {
     }
 
     private void sendPacket(Entity entity, Player player, boolean tagVisible) {
-        ProtocolLibHook protocolLibHook = sm.getHookManager().getProtocolLibHook();
-        if (protocolLibHook == null) {
+        PacketEventsHook packetEventsHook = sm.getHookManager().getPacketEventsHook();
+        if (packetEventsHook == null) {
             return;
         }
-        protocolLibHook.sendPacket(player, entity, tagVisible);
+        packetEventsHook.sendPacket(player, entity, tagVisible);
     }
 
     public boolean isTagVisible() {

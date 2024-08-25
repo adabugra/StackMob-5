@@ -326,8 +326,8 @@ hooks:
     # IGNORE - Make it so StackMob doesn't touch Jobs.
     # MULTIPLY - Multiply rewards for stacked mobs.
     mode: PREVENT
-  # Allows the use of ProtocolLib, which is used when the server version is not the native one of the plugin.
-  protocollib: true
+  # Allows the use of PacketEvents, which is used when the server version is not the native one of the plugin.
+  packetevents: true
   # Make it so that ClearLagg removes stacked entities.
   clearlagg: false
   # Make it so that MyPet pets do not stack.

@@ -12,8 +12,6 @@ public interface FakeArmorStand {
 
     void updateName(Component newName);
 
-    void teleport(Entity entity, double offset);
-
     void removeFakeArmorStand();
 
     default Location adjustLocation(Entity entity, double offset) {
